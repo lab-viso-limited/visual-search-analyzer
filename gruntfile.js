@@ -7,11 +7,9 @@ module.exports = function(grunt) {
       options: {
         macIcns: './src/icon/icon.icns',
         winIco: './src/icon/icon.ico',
-//         platforms: ['osx64','win64'],
-       platforms: ['osx64'],
+        platforms: ['osx64','win64'],
         buildDir: '../Release/2.0.0',
-//         cacheDir: '/Users/gabriel/Workspace/App/NW.js/Resources/Platform/',
-        cacheDir: '/Applications/NW.js',
+        cacheDir: '../Cache',
         version: '0.12.3'
       },
       src: ['./src/**']

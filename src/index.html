@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html style="height:100%">
+<head>
+  <meta charset="UTF-8">
+  <script src="js/third_party/jquery-2.1.4.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <script src="js/style.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.min.css">
+  <script src="js/third_party/bootstrap/bootstrap.min.js"></script>
+
+  <script src="js/third_party/FileSaver.js"></script>
+  <script src="js/third_party/papaparse.js"></script>
+  <script src="js/third_party/jszip.min.js"></script>
+
+  <script src="js/labviso/extension-1.0.0.js"></script>
+  <script src="js/labviso/util-1.0.0.js"></script>
+
+  <script src="js/app/app-util.js"></script>
+
+  <script src="js/app/app.js"></script>
+  <script src="js/app/dataCleaner.js"></script>
+
+  <script src="js/app/visualSearchAnalyzer.js"></script>
+  <script src="js/app/visualSearchSTDBscan.js"></script>
+
+  <script src="js/app/imageAnalyzer.js"></script>
+
+  <script src="js/app/visualizer.js"></script>
+</head>
+
+<body style="width:100%; height:100%">
+  <div id="loadingLayer" style="height:100%; width:100%; position:fixed; padding:0; top:0px; left:0px; z-index:9999; background-color: rgba(0, 0, 0, 0.5); text-align:center; display:none">
+    <div style="height:40%"></div>
+    <img src="img/loader.gif" style="margin:0 auto; width:60px; background: black; border-radius:5px; border-style:solid; border-color:black; border-width:15px">
+    <div id="loadingMessage" style="margin:5px auto; color:white; font-weight:bold; font-size:13px"></div>
+  </div>
+  
+      <table class="container" style="height:100%; width:100%">
+        <tr>
+          <td style="width:320px; border-style:none solid none none; border-color:#ccc; border-width:1px">
+            <table class="container-panel" style="width:100%">
+              <tr>
+                <td style="width:90px">Image Set</td>
+                <td>
+                  <select id="visualSearch_imageSet" class="form-control">
+                    <option value="1" selected="">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                </td>
+              </tr>
+
+              <tr name="visualSearch_filesInput_eyeData">
+                <td>Eye Data</td>
+                <td>
+                  <input type="file" id="visualSearch_eyeDataFile" class="input-file">
+                </td>
+              </tr>
+              <tr name="visualSearch_filesInput_actionData">
+                <td>Action Data</td>
+                <td>
+                  <input type="file" id="visualSearch_actionDataFile" class="input-file"  >
+                </td>
+              </tr>
+
+              <tr>
+                <td>Algorithm</td>
+                <td><input type="radio" name="visualSearch_algorithm"  value="clean">&nbsp;&nbsp;<b>Tobii (Fill Missing Data Only)</b></td>
+              </tr>
+              
+              <tr>
+                <td></td>
+                <td>
+                  <input type="radio" name="visualSearch_algorithm" value="stDBscan" checked="">&nbsp;&nbsp;<b>ST DBScan</b>
+                  <table style="margin:6px 0 0 16px">
+                    <tr>
+                      <td>Point Diameter</td>
+                      <td><input type="text" id="visualSearch_stDBScan_minClusterSize"  value="45" class="form-control" style="width:60px"></td>
+                    </tr>
+                    <tr>
+                      <td>Cluster Size</td>
+                      <td><input type="text" id="visualSearch_stDBScan_minTime" value="5" class="form-control" style="width:60px"></td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              
+              <tr>
+                <td></td>
+                <td><input type="button" id="visualSearch_run" disabled="" value="Run" style="width:100%" class="visualSearch_submit_algorithm btn btn-primary"></td>
+              </tr>
+              
+              <tr>
+                <td colspan="2" style=""><hr></td>
+              </tr>
+
+              <tr>
+                <td>Download</td>
+                <td><input id="visualSearch_downloadSummary" type="file" nwsaveas="vs_summary.csv" accept=".csv" value="Summary" style="width:100%" class="btn btn-primary save-file"></td>
+              </tr>
+
+              <tr>
+                <td></td>
+                <td><input id="visualSearch_downloadFixationData" type="file" nwsaveas="vs_fixation_data.csv" accept=".csv" value="Fixation Data" style="width:100%" class="btn btn-primary save-file"></td>
+              </tr>
+
+              <tr>
+                <td></td>
+                <td><input id="visualSearch_downloadSaccadeData" type="file" nwsaveas="vs_saccade_data.csv" accept=".csv" value="Saccade Data" style="width:100%" class="btn btn-primary save-file"></td>
+              </tr>
+  
+              <tr>
+                <td></td>
+                <td><input id="visualSearch_downloadPointData" type="file" nwsaveas="vs_point_data.csv" accept=".csv" value="Point Data" style="width:100%" class="btn btn-primary save-file"></td>
+              </tr>
+
+              <tr>
+                <td></td>
+                <td><input id="visualSearch_downloadVisualData" type="file" nwsaveas="vs_visual_data.json" accept=".json" value="Visual Data" style="width:100%" class="btn btn-primary save-file"></td>
+              </tr>
+              
+            </table>
+          </td>
+          
+          <td style="vertical-align:top">
+            <table class="container-panel" style="width:100%">
+        
+                <tr>
+                  <td style="width:250px; vertical-align:top">
+                    <table class="container-panel" style="width:100%">
+                      <tr>
+                        <td style="width:78px">Image Set</td>
+                        <td>
+                          <select id="visualizer_imageSet" class="form-control">
+                            <option value="1" selected="">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                          </select>
+                        </td>
+                      </tr>
+                      
+                      <tr id="visualizer_fileContainer">
+                        <td>File</td>
+                        <td><input type="file" id="visualizer_file" style="width:140px; position:absolute" class="input-file"></td>
+                      </tr>
+                      
+                      <tr>
+                        <td>Begin From</td>
+                        <td>
+                          <select id="visualizer_image" class="form-control">
+                            <option value="1" selected="">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                            <option value="32">32</option>
+                            <option value="33">33</option>
+                            <option value="34">34</option>
+                            <option value="35">35</option>
+                            <option value="36">36</option>
+                            <option value="37">37</option>
+                            <option value="38">38</option>
+                            <option value="39">39</option>
+                            <option value="40">40</option>
+                          </select>
+                        </td>
+                      </tr>
+                      
+                      <tr>
+                        <td>Speed</td>
+                        <td>
+                          <select id="visualizer_speed" class="form-control">
+                            <option value="3">1X</option>
+                            <option value="30">10X</option>
+                            <option value="60" selected="">20X</option>
+                            <option value="90">30X</option>
+                            <option value="120">40X</option>
+                          </select>
+                        </td>
+                      </tr>
+                      
+                      <tr>
+                        <td>Display Type</td>
+                        <td>
+                          <select id="visualizer_displayType" class="form-control">
+                            <option value="1" selected="">Trajectory</option>
+                            <option value="2">Point</option>
+                          </select>
+                        </td>
+                      </tr>
+                      
+                      <tr>
+                        <td></td>
+                        <td>
+                          <input type="button" id="visualizer_submit" value="Play" disabled="" class="visualizer_button btn btn-primary" style="width:100%">
+                          
+                          <input type="button" id="visualizer_resetTrial" value="Reset Trial" disabled="" class="visualizer_button btn btn-primary" style="width:100%; margin:6px 0">
+        
+                          <input type="button" id="visualizer_resetExp" value="Reset Experiment" disabled="" class="visualizer_button btn btn-primary" style="width:100%">
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                  
+                  <td>
+                    <canvas id="visualizer_canvas" width="1920" height="1080" style="width:100%; border-style:solid; border-width:1px; border-color:#e1e1e1"></canvas>
+                    <div id="visualizer_imgInfo">- / --:--:--.----</div>
+
+                  </td>
+                </tr>
+
+
+
+
+            </table>
+          </td>
+        </tr>
+
+        </tr>
+      </table>
+
+  <!-- Modal -->
+  <div class="modal fade" id="alertbox" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header" style="color:white; background-color: #0480be">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">ERROR</h4>
+        </div>
+        <div class="modal-body">An unknown error (code: -213).</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+
+<script>
+/*
+fs.watch("./", {recursive: true}, function(){
+  if(location){
+    location.reload();
+  }
+});
+*/
+</script>

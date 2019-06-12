@@ -1,0 +1,15 @@
+{
+  "name": "visual-search-analyzer",
+  "version": "2.0.0",
+  "description": "A desktop application (Windows and MacOS compatible) for visualising the eyeball movement data that are captured by Tobii Studio. The algorithm to use for visuzlising the data is ST-DBSCAN. The desktop application is developed based on NW.js.",
+  "main": "gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lab Viso Limited. enquiry@labviso.com",
+  "license": "MIT",
+  "dependencies": {
+    "grunt": "1.x",
+    "grunt-nw-builder": "2.x"
+  }
+}

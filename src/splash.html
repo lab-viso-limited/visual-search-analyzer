@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html style="height:100%">
+<head><meta charset="UTF-8"></head>
+<body style="padding:0; margin:0; overflow:hidden"><img src="splash/splash.png" style="width:600px; height:400px; margin:0; padding:0; border:0; display:block"></body>
+<script>
+var gui = require('nw.gui');
+setTimeout(function(){
+  var startUpImage = gui.Window.get();
+
+/*
+  var app = gui.Window.open('index.html', {
+    "title": "Analyzer",
+    "min_width": 800,
+    "min_height": 600,
+    "width": 1200,
+    "height": 880,
+    "icon": "img/icon.png",
+    "fullscreen": false,
+    "resizable": true,
+    "position": "center",
+    "frame": true,
+    "show": true
+  }, function(win){
+    startUpImage.close();
+  });
+*/
+  
+  var app = gui.Window.open('index.html', {
+    "title": "Visual Search Analyzer",
+    "min_width": 800,
+    "min_height": 600,
+    "width": 1480,
+    "height": 600,
+    "icon": "img/icon.png",
+    "fullscreen": false,
+    "resizable": true,
+    "position": "center",
+    "frame": true,
+    "toolbar": false,
+    "show": false
+  }, true);
+  app.on("loaded", function(){
+    startUpImage.close();
+    app.show();
+  });
+
+}, 3000);
+</script>
+</html>

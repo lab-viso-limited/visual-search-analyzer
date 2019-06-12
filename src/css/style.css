@@ -1,0 +1,102 @@
+body{
+  margin:0;
+  padding:0;
+  height: 100%;
+}
+
+table.container{
+  border-collapse: collapse;
+  border:none;
+  width:100%;
+}
+table.container td{
+  margin:0;
+  padding:8px;
+  border-style: none;
+  border-width: 1px;
+  border-color: #ccc;
+  text-align: left;
+  vertical-align: top;
+}
+
+div.container-heading{
+  text-align:center;
+  font-weight: bold;
+  margin:4px 0 14px 0;
+  font-size:16px;
+}
+
+table.container table.container-panel{
+  
+}
+table.container table.container-panel td{
+  margin:0;
+  padding:4px;
+  border-style:none;
+  text-align: left;
+  vertical-align: middle;
+  height:42px;
+}
+
+/*
+table.container td{
+  margin:0;
+  padding:0;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ccc;
+  text-align: left;
+  vertical-align: top;
+}
+
+div.container-panel-header{
+  background:#f3f3f3;
+  padding:6px 12px;
+  text-align: left;
+  border-style: none none solid none;
+  border-width: 1px;
+  border-color: #ccc;
+  font-weight: bold;
+}
+div.container-panel-body{
+  padding:6px
+}
+
+div.container-panel table{
+  width:100%;
+  border-collapse: collapse;
+  border:none;
+}
+div.container-panel table td{
+  margin:0;
+  padding:4px;
+
+  border-style: none;
+  text-align: left;
+  vertical-align: middle;
+  height:30px;
+}
+
+
+div.container-panel div.container-input table{
+  padding:0;
+  margin:0;
+}
+div.container-panel div.container-input table th{
+  background: none;
+  border: none;
+  font-weight: bold;
+  padding:2px 4px;
+}
+div.container-panel div.container-input table td{
+  padding:2px 4px;
+}
+*/
+
+
+
+
+
+input.input-file, input.save-file {
+  opacity:0;
+}

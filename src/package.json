@@ -1,0 +1,22 @@
+{
+  "name": "Visual Search Analyzer",
+  "version": "2.0.0",
+  "description": "",
+  "main": "splash.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Gabriel Fung. Lab Viso Limited. enquiry@labviso.com",
+  "window": {
+    "title": "Eye Tracking Analyzer",
+    "icon": "icon/icon.png",
+    "width": 600,
+    "height": 400,
+    "position": "center",
+    "fullscreen": false,
+    "resizable": false,
+    "frame": false,
+    "toolbar": false,
+    "show": true
+  }
+}
